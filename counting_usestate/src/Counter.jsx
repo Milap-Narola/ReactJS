@@ -17,6 +17,7 @@ const Counter = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      width :100vw,
       height: '100vh', // Full height of the viewport
       backgroundColor: '#f0f0f0', // Light background for contrast
     },
