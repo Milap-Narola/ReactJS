@@ -5,7 +5,7 @@ import data from './data.json';
 const App = () => {
   return (
     <div style={{ textAlign: 'center', margin: '20px' }}>
-      <h1 style={{ color: '#333' }}>Food List</h1>
+      <h1 style={{ color: 'white' }}>Food List</h1>
       <Foodlist foods={data} /> 
     </div>
   );
