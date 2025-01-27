@@ -1,0 +1,9 @@
+{
+  "foods": [
+    {
+      "name": "Apple",
+      "category": "Froot",
+      "price": "100"
+    }
+  ]
+}
