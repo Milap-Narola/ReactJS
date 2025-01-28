@@ -12,41 +12,36 @@ import ResultView from './components/pages/result/ResultView';
 import { AuthProvider } from './components/pages/context/AuthContext';
 import { Navbar } from './components/layout/Navbar';
 
-
 const App = () => {
   return (
-    <div className='flex flex-col items-center bg-white'>
+    <div className="flex flex-col items-center bg-white">
       <AuthProvider>
         <Navbar />
 
         <Routes>
+          {/* Home Route */}
           <Route path="/" element={<h1>Home</h1>} />
 
-          <Route path="/auth" element={<h1>Auth</h1>}> 
+          {/* Authentication Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-        </Route>
 
-        <Route path="/dashboard" element={<h1>Dashboard</h1>}>
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
-        <Route path="/student-dashboard" element={<StudentDashboard />} />
-      </Route>
+          {/* Dashboard Routes */}
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+          <Route path="/student-dashboard" element={<StudentDashboard />} />
 
-      <Route path="/exams" element={<h1>Exams</h1>}>
-        <Route path="/exams" exact element={<ExamList />} />
-        <Route path="/exams/create" element={<ExamCreate />} />
-        <Route path="/exams/:id" element={<ExamTake />} />
-      </Route>
+          {/* Exam Routes */}
+          <Route path="/exams" element={<ExamList />} />
+          <Route path="/exams/create" element={<ExamCreate />} />
+          <Route path="/exams/:id" element={<ExamTake />} />
 
-      <Route path="/results" element={<h1>Results</h1>}>
-        <Route path="/results/:id" element={<ResultView />} />
-      </Route>
-      </Routes>
-
-    </AuthProvider>
-    </div> 
+          {/* Results Route */}
+          <Route path="/results/:id" element={<ResultView />} />
+        </Routes>
+      </AuthProvider>
+    </div>
   );
-}
+};
 
 export default App;

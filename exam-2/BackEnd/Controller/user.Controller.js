@@ -6,8 +6,12 @@ const user = {
 
   register: async (req, res) => {
     try {
+      console.log(req.body);
       const { username, email, password, role } = req.body;
 
+      if (!role || !['admin', 'teacher', 'student'].includes(role)) {
+        return res.status(400).json({ message: 'Invalid role provided' });
+      }
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.status(400).json({ message: 'User already exists' });

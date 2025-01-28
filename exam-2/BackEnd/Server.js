@@ -10,13 +10,7 @@ require('dotenv').config();
 
 const app = express();
 
-const corsOption =
-{
-    origin: "http://localhost:5173",
-    methods: 'GET,POST,PUT,DELETE,PATCH,',
-    credentials: true
-}
-app.use(cors(corsOption))
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('API is running...');
