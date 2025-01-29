@@ -9,29 +9,39 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      setUser({ role: 'admin' });
       const userRole = token.split(' ')[1];
-      console.log(userRole);
-      setUser({ ...user, role: userRole });
+      setUser({ role: userRole });
     }
   }, []);
 
   const authLogin = async (email, password) => {
-    const data = await login(email, password);
-    setUser(data.user);
-    localStorage.setItem('token', data.token);
+    try {
+      let data = await login(email, password);
+      if (data?.token)
+        localStorage.setItem('token', data.token);
+      setUser({ role: data.role });
+      return { user: { role: data.role } };
+    } catch (error) {
+      console.log('Login Failed', error);
+
+    }
   };
 
-  const authRegister = async (username, email, password,role) => {
-    const data = await register(username, email, password,role);
-    setUser(data.user);
-    console.log( data.user );
-    
-    localStorage.setItem('token', data.token);
+  const authRegister = async (username, email, password, role) => {
+    try {
+      let res = await register(username, email, password, role);
+      if (res?.token)
+        localStorage.setItem('token', res.token)
+      setUser({ role })
+      return
+    } catch (error) {
+      console.error('Registration Failed', error);
+    }
   };
 
   const authLogout = () => {
     logout();
+    localStorage.removeItem('token');
     setUser(null);
   };
 

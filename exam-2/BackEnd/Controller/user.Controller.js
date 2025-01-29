@@ -6,12 +6,8 @@ const user = {
 
   register: async (req, res) => {
     try {
-      console.log(req.body);
       const { username, email, password, role } = req.body;
 
-      if (!role || !['admin', 'teacher', 'student'].includes(role)) {
-        return res.status(400).json({ message: 'Invalid role provided' });
-      }
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.status(400).json({ message: 'User already exists' });
@@ -20,39 +16,49 @@ const user = {
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
 
-      const user = new User({
-        username,
-        email,
+      let user = await User.create({
+        username: username,
+        email: email,
         password: hashPassword,
-        role
+        role: role
       });
 
-      await user.save();
 
-      const token = jwt.sign(
-        { id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
+      let token = jwt.sign({
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role
+      },
+        process.env.JWT_SECRET, { expiresIn: '1d' });
+      console.log(user, token);
       res.status(201).json({
         message: 'User registered successfully',
         token,
         user: {
           id: user._id,
-          username: user.username,
-          email: user.email,
-          role: user.role
+          username,
+          email,
+          role
         }
       });
+
+
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      console.log("Register error", error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   },
 
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
+
       const user = await User.findOne({ email });
+
       if (!user) {
-        return res.status(401).json({ message: 'Invalid credentials' });
+        return res.status(401).json({ message: 'User Not Found' });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -60,7 +66,15 @@ const user = {
         return res.status(401).json({ message: 'Password Mismatch' });
       }
 
-      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
+      let token = jwt.sign({
+        id: user._id,
+        username: user.username,
+        role: user.role
+      },
+        process.env.JWT_SECRET,
+        { expiresIn: '1d' });
+
+      console.log(user, token);
 
       res.json({
         token,
@@ -72,13 +86,14 @@ const user = {
         }
       });
     } catch (error) {
+      console.error("Login error:", error);
       res.status(500).json({ error: error.message });
     }
   },
 
   getProfile: async (req, res) => {
     try {
-      const user = await User.findById(req.user_id).select('-password');
+      const user = await User.findById(req.user.id).select('-password');
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
@@ -131,6 +146,7 @@ const user = {
     }
   }
 };
+
 
 module.exports = user;
 

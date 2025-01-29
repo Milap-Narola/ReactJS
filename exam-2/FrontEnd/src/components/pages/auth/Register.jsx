@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { AuthContext } from '../../pages/context/AuthContext';
+import React, { useState, useContext } from 'react';
 import { Input } from '../../common/Input';
 import { Button } from '../../common/Button';
-import { register } from '../service/AuthService';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {
+  const { register } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
     role: 'student'
   });
-  useEffect(() => {
-    register(AuthContext)
-  },[ ]);
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,14 +22,14 @@ export const Register = () => {
     }));
 
   }
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, email, password, role } = formData;
-    register(username, email, password, role);
-
+   let res= await register(username, email, password, role);
+    navigate('/login');
+    
   };
-  console.log(formData);
+
 
   return (<div className="flex items-center justify-center  min-h-screen bg-gray-900">
     <div className='w-full max-w-md  p-6 bg-gray-800 rounded-lg shadow-lg '>
@@ -45,7 +44,7 @@ export const Register = () => {
           value={formData.username}
           onChange={handleChange}
           placeholder="Enter userName"
-          className="w-full px-4 py-3 bg-gray-900 border text-white border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-center"
+          className="w-full px-4 py-3 bg-gray-900 border text-white rounded-lg text-center"
         />
         <Input
           type="email"
@@ -53,7 +52,7 @@ export const Register = () => {
           value={formData.email}
           onChange={handleChange}
           placeholder="Enter Email"
-          className="w-full px-4 py-3 bg-gray-900 border text-white border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-center"
+          className="w-full px-4 py-3 bg-gray-900 border text-white rounded-lg text-center"
         />
         <Input
           type="password"
@@ -61,14 +60,14 @@ export const Register = () => {
           value={formData.password}
           onChange={handleChange}
           placeholder="Enter  Password"
-          className="w-full px-4 py-3 bg-gray-900 border text-white border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-center"
+          className="w-full px-4 py-3 bg-gray-900 border text-white rounded-lg  text-center"
         />
 
         <select
           name="role"
           value={formData.role}
           onChange={handleChange}
-          className="w-full px-4 py-3 bg-gray-900 border text-centre border-gray-700 rounded-lg focus:outline-none"
+          className="w-full px-4 py-3 bg-gray-900 border text-centre  rounded-lg "
         >
           <option value="admin" className='text-center'>Admin</option>
           <option value="teacher" className='text-center'>Teacher</option>
