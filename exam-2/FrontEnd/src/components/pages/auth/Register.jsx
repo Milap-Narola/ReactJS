@@ -25,9 +25,10 @@ export const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, email, password, role } = formData;
-   let res= await register(username, email, password, role);
+    let res = await register(username, email, password, role);
+    console.log('Registration Successful:', res);
     navigate('/login');
-    
+
   };
 
 

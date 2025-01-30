@@ -11,6 +11,7 @@ import ExamTake from './components/pages/exam/ExamTake';
 import ResultView from './components/pages/result/ResultView';
 import { AuthProvider } from './components/pages/context/AuthContext';
 import { Navbar } from './components/layout/Navbar';
+import Home from './Home';
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
 
         <Routes>
           {/* Home Route */}
-          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/" element={<Home />} />
 
           {/* Authentication Routes */}
           <Route path="/login" element={<Login />} />

@@ -26,11 +26,14 @@ export const Login = () => {
       if (res?.user?.role === 'student') {
         navigate('/student-dashboard')
       }
-      else if (!res?.user?.role === 'teacher') {
+      else if (res?.user?.role === 'teacher') {
         navigate('/teacher-dashboard')
       }
-      else if (!res?.user?.role === 'admin') {
+      else if (res?.user?.role === 'admin') {
         navigate('/admin-dashboard')
+      }
+      else {
+        navigate('/home')
       }
     } catch (error) {
       console.error('Login Failed', error);
