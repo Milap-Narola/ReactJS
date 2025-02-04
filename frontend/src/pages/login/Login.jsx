@@ -21,8 +21,8 @@ export const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen  bg-gray-100">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md max-h-auto">
+    <div className="flex justify-center items-center w-screen h-screen bg-gray-100">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
