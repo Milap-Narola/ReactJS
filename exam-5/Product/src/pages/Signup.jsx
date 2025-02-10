@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const signupValidation = z.object({
@@ -16,6 +17,15 @@ const signupValidation = z.object({
 });
 
 const Signup = ({ setUser }) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const user = localStorage.getItem("user") || Cookies.get("auth");
+        if (user) {
+            navigate("/login"); 
+        }
+    }, [navigate]);
+
     const {
         register,
         handleSubmit,
@@ -25,7 +35,8 @@ const Signup = ({ setUser }) => {
     const onSubmit = (data) => {
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
-        Cookies.set("auth", data.token, { expires: 7 });
+        Cookies.set("auth", data.token, { expires: 7 }); 
+        navigate("/login"); 
     };
 
     return (

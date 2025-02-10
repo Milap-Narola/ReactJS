@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Home = () => {
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("https://dummyjson.com/products")
-            .then((res) => res.json())
-            .then((data) => setProducts(data.products))
-            .catch((error) => console.error("Error fetching products:", error));
-    }, []);
+        const user = localStorage.getItem("user");
+
+        if (!user) {
+            navigate("/signup");
+            return;
+        }
+        const fetchProducts = async () => {
+            try {
+                const res = await axios.get("https://dummyjson.com/products");
+                setProducts(res.data.products);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+
+        fetchProducts();
+    }, [navigate]);
+
 
     return (
         <div className="container mx-auto mt-10 p-4">
-            <h1 className="text-3xl font-bold  text-center">Welcome to Home Page</h1>
+            <h1 className="text-3xl font-bold text-center">Welcome to Home Page</h1>
 
             {products.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">

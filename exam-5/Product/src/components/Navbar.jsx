@@ -11,17 +11,17 @@ const Navbar = ({ user, setUser }) => {
     };
 
     return (
-        <nav className="flex w-screen">
-            {/* <h1 className="text-xl font-bold">My App</h1> */}
+        <nav className="flex w-screen  bg-black p-4 items-center ">
+            <Link to="/" className="text-white  mr-4">Home</Link>
+
             <div>
-                <Link to="/" className="mr-4">Home</Link>
                 {!user ? (
                     <>
-                        <Link to="/login" className="mr-4">Login</Link>
-                        <Link to="/signup" className="mr-4">Signup</Link>
+                        <Link to="/login" className="text-white mr-4 ">Login</Link>
+                        <Link to="/signup" className="text-white mr-4 ">Signup</Link>
                     </>
                 ) : (
-                    <button onClick={handleLogout} className="bg-red-500 px-4 py-2 rounded">
+                    <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
                         Logout
                     </button>
                 )}
