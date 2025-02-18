@@ -1,0 +1,24 @@
+.styled-component {
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: all var(--transition-speed);
+  }
+  
+  .styled-component.styled {
+    background-color: var(--primary-color);
+    color: white;
+    animation: slideIn 0.5s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
