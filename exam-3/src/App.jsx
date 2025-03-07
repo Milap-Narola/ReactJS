@@ -1,5 +1,6 @@
 import React from 'react'
-import DataFood from './DataFood'
+import DataFood from './page/DataFood'
+
 
 const App = () => {
   return (
