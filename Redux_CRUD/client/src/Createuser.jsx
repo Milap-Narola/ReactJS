@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { createUser } from './redux/Userslice';
+import { toast, Bounce, ToastContainer } from 'react-toastify';
 
 const Createuser = () => {
     const [user, setUser] = useState({
@@ -24,12 +25,35 @@ const Createuser = () => {
             return;
         }
         try {
-
             let res = await dispatch(createUser(user)).unwrap()
-            alert(res.message)
-            navigate('/')
+
+            toast.success('🦄 User Created Successfully!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+            setTimeout(() => {
+                navigate("/");
+            }, 2000);
         } catch (error) {
-            alert(error.message || "Failed to create user");
+            toast.error('🦄 User Not Created!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+
         }
     }
 
@@ -56,8 +80,11 @@ const Createuser = () => {
                         name='age'
                         value={user.age}
                         onChange={handleInput} />
-                    <button className='btn btn-success btn-md' type='submit'>Add User</button>
+                    <button className='btn btn-success btn-md' >
+                        Add User
+                    </button>
                 </form>
+            <ToastContainer />
             </div>
         </div>
     )
