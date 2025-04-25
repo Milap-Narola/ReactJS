@@ -70,7 +70,7 @@ export const deleteUser = async (req, res) => {
         await userModel.findByIdAndDelete(id)
         return res.status(200).json({ message: "User Delete Successful", id })
     } catch (error) {
-        res.status(404).json({ message: "error deleting user", error });
+        res.status(500).json({ message: "error deleting user", error });
 
     }
 }
