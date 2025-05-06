@@ -31,7 +31,7 @@ export const getUserById = createAsyncThunk("users/getUserById",
             return rejectWithValue({ message: "User Not Found", error });
         }
     })
-export const updateUser = createAsyncThunk("/users/updateUser",
+export const updateUserById = createAsyncThunk("/users/updateUser",
     async ({ id, userUpdate }, { rejectWithValue }) => {
         try {
             let res = await Api.patch(`users/update/${id}`, userUpdate);
@@ -41,7 +41,7 @@ export const updateUser = createAsyncThunk("/users/updateUser",
         }
     })
 
-export const deleteUser = createAsyncThunk("/users/deleteUser",
+export const deleteUserById = createAsyncThunk("/users/deleteUser",
     async (id, { rejectWithValue }) => {
         try {
             let res = await Api.delete(`users/delete/${id}`);
@@ -86,12 +86,12 @@ const userSlice = createSlice({
                 state.status = "succeeded";
             })
 
-            .addCase(updateUser.fulfilled, (state, action) => {
+            .addCase(updateUserById.fulfilled, (state, action) => {
                 state.users = state.users.map(user =>
                     user._id === action.payload._id ? action.payload : user);
 
             })
-            .addCase(deleteUser.fulfilled, (state, action) => {
+            .addCase(deleteUserById.fulfilled, (state, action) => {
                 state.users = state.users.filter(user => user._id !== action.payload);
             })
 
