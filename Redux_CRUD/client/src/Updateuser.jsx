@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser, getUserById } from "./redux/Userslice";
+import { getUserById,updateUserById } from "./redux/Userslice";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, Bounce, toast } from "react-toastify";
 
@@ -32,9 +32,9 @@ const UpdateUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await dispatch(updateUser({ id, updatedata: userupdate })).unwrap();
+      let res = await dispatch(updateUser({ id, userUpdate: userupdate })).unwrap();
 
-      toast.success('🦄 User Updated Successfully!', {
+      toast.success('🦄 ${res.name} User Updated Successfully!', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -48,7 +48,7 @@ const UpdateUser = () => {
 
       setTimeout(() => {
         navigate("/");
-      }, 2000);
+      }, 1000);
 
     } catch (error) {
 
