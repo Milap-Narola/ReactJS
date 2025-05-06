@@ -45,7 +45,7 @@ export const deleteUserById = createAsyncThunk("/users/deleteUser",
     async (id, { rejectWithValue }) => {
         try {
             let res = await Api.delete(`users/delete/${id}`);
-            return res.data;
+            return id;
         } catch (error) {
             return rejectWithValue({ message: "User Not Found", error });
         }
