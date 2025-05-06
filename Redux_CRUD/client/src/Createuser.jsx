@@ -27,7 +27,7 @@ const Createuser = () => {
         try {
             let res = await dispatch(createUser(user)).unwrap()
 
-            toast.success('🦄 User Created Successfully!', {
+            toast.success('🦄 ${res.user.name} User Created Successfully!', {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -40,7 +40,7 @@ const Createuser = () => {
             });
             setTimeout(() => {
                 navigate("/");
-            }, 2000);
+            }, 1000);
         } catch (error) {
             toast.error('🦄 User Not Created!', {
                 position: "top-center",
