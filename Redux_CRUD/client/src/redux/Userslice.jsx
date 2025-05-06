@@ -44,7 +44,7 @@ export const updateUserById = createAsyncThunk("/users/updateUser",
 export const deleteUserById = createAsyncThunk("/users/deleteUser",
     async (id, { rejectWithValue }) => {
         try {
-            let res = await Api.delete(`users/delete/${id}`);
+             await Api.delete(`users/delete/${id}`);
             return id;
         } catch (error) {
             return rejectWithValue({ message: "User Not Found", error });
